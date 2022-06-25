@@ -73,6 +73,9 @@ page = "https://admitted-detail-96b.notion.site/No-Secret-Wiki-efb2b939911f4dc2a
 # a sub-table named after the page url (or part of the url, but careful about
 # not using a string that appears in multiple page urls)
 [pages]
+  [pages.e3886bfe8d1e478c9f2888aae9870972]
+    no-links = true
+
   # the following settings will only apply to this page: 
   #   https://www.notion.so/d2fa06f244e64f66880bb0491f58223d
   [pages.d2fa06f244e64f66880bb0491f58223d]
