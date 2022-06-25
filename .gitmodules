@@ -1,0 +1,3 @@
+[submodule "dist/NoSecretWiki"]
+	path = dist/NoSecretWiki
+	url = https://github.com/muscly/muscly.github.io.git
