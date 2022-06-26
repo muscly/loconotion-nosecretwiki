@@ -7,7 +7,7 @@ name = "NoSecretWiki"
 
 # the notion.so page to being parsing from. This page will become the index.html
 # of the generated site, and loconotation will parse all sub-pages present on the page
-page = "https://admitted-detail-96b.notion.site/No-Secret-Wiki-efb2b939911f4dc2a1a3d8f48f5f149a"
+page = "https://muscly.notion.site/CodingDad-2-0-No-Secret-Wiki-efb2b939911f4dc2a1a3d8f48f5f149a"
 
 ## Global Site Settings ##
 # this [site] table defines override settings for the whole site
