@@ -1,7 +1,7 @@
 #!/bin/bash
 eval "$(conda shell.bash hook)"
 conda activate loconotion
-python loconotion config.toml --timeout 50
+python loconotion config.toml --timeout 300
 
 cd dist/NoSecretWiki
 git add -A
