@@ -5,7 +5,10 @@ node {
                 bat 'git clean -f -d'
                 bat 'git reset --hard'
                 bat 'git submodule foreach --recursive git reset --hard'
-                bat 'git pull --recurse-submodules'
+                bat 'git pull'
+                dir('dist/NoSecretWiki') {
+                    bat 'git pull'
+                }
             }
         }
 
@@ -15,8 +18,7 @@ node {
         }
 
         stage('Upload') {
-            dir('dist/NoSecretWiki')
-            {
+            dir('dist/NoSecretWiki') {
                 bat 'git add -A'
                 bat 'git commit -m "By Script'
                 bat 'git push -u origin main'
