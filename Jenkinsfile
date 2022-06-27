@@ -5,9 +5,9 @@ node {
                 bat 'git clean -f -d'
                 bat 'git reset --hard'
                 bat 'git submodule foreach --recursive git reset --hard'
-                bat 'git pull'
+                bat 'git pull origin master'
                 dir('dist/NoSecretWiki') {
-                    bat 'git pull'
+                    bat 'git pull origin main'
                 }
             }
         }
