@@ -9,7 +9,7 @@ node {
         stage('Update') {
             withCredentials([gitUsernamePassword(credentialsId: 'muscly_github', gitToolName: 'git-tool')]) {
                 bat 'git clean -f -d'
-                bat 'git rest'
+                bat 'git reset'
                 bat 'git pull --recurse-submodules'
             }
         }
