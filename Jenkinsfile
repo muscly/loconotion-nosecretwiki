@@ -15,6 +15,24 @@ node {
             }
         }
 
+        stage('Generate') {
+            bat 'conda activate loconotion'
+            bat 'python loconotion config.toml --timeout=300'
+        }
+
+        stage('Upload') {
+            dir('dist/NoSecretWiki')
+            {
+                bat 'git add -A'
+                bat 'git commit -m "By Script'
+                bat 'git push -u origin main'
+            }
+
+            bat 'git add -A'
+            bat 'git commit -m "By Script'
+            bat 'git push -u origin master'
+        }
+
 /*
 
         stage('Update') {
