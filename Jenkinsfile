@@ -36,16 +36,17 @@ node {
         echo "[muscly] Fail. " + e
         currentBuild.result = 'FAILURE'
         throw e
-
-    } finally {
+        j
         def body = '''${SCRIPT, template="groovy-html.template"}''' 
 
         emailext body: body,
             mimeType: 'text/html',
             subject: '$DEFAULT_SUBJECT',
             to: '$DEFAULT_RECIPIENTS',
-            attachLog: true,
-            compressLog: true,
-            saveOutput: true
+            attachLog: false,
+            compressLog: false,
+            saveOutput: false
+
+    } finally {
     }
 }
