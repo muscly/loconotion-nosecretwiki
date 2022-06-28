@@ -94,7 +94,8 @@ token = "secret_AxpQOzIY1AnIwK2f4NCGsZe5zz5yzx3RfoH3736PFl0"
 [pages]
   [pages.59f6278a93e04df09e80b20b9d2a3bca]
     no-links = true
-    [inject.body.script]
+
+    [pages.59f6278a93e04df09e80b20b9d2a3bca.inject.body.script]
       inner_html="""
 setTimeout(function(){
   window.location.href = '/';
