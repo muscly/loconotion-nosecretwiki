@@ -10,6 +10,8 @@ import time
 import urllib.parse
 import uuid
 from pathlib import Path
+import json
+import requests
 
 log = logging.getLogger(f"loconotion.{__name__}")
 
@@ -43,6 +45,37 @@ class Parser:
                 " page to parse"
             )
             raise Exception()
+
+        self.slug_dict = {}
+        database_id = self.config.get("database_id", None)
+        token = self.config.get("token", None)
+        url = f'https://api.notion.com/v1/databases/{database_id}/query'
+        headers = {
+            "Authorization" : f"Bearer {token}",
+            "Notion-Version": "2021-08-16"
+        }
+        r = requests.post(url, headers=headers)
+        res_dict = r.json()
+
+        log.info( f'url = {url}')
+        log.info( f'headers = {headers}')
+        log.info( f'respons = {json.dumps(res_dict, indent=4)}')
+
+        for page in res_dict['results']:
+            id = page['id'].replace("-", "")
+            try:
+                rich_text = page['properties']['slug']['rich_text']
+                if len(rich_text) == 0:
+                    continue
+                slug = page['properties']['slug']['rich_text'][0]['text']['content']
+            except Exception as e:
+                log.error(f'Exception in getting slug. id:{id}, error:{e}')
+                continue
+
+            self.slug_dict[id] = slug
+
+        log.info ( f'slug_dict = {self.slug_dict}')
+
 
         # get the site name from the config, or make it up by cleaning the target page's slug
         site_name = self.config.get("name", self.get_page_slug(index_url, extension=False))
@@ -131,6 +164,14 @@ class Parser:
             log.debug(f"Custom slug found for url '{url}': '{custom_slug}'")
             return custom_slug.strip("/") + (".html" if extension else "")
         else:
+            for page_id in self.slug_dict:
+                if page_id in url:
+                    slug = self.slug_dict[page_id]
+                    log.debug(f"Found slug: {slug} from page_id: {page_id}. url: {url} ")
+                    return slug.strip("/").strip() + (".html" if extension else "")
+
+            log.debug(f"slug Not found in slug_dict. url:{url}")
+
             # if not, clean up the existing slug
             path = urllib.parse.urlparse(url).path.strip("/")
             if "-" in path and len(path.split("-")) > 1:
