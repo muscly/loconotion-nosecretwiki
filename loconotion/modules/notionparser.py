@@ -68,6 +68,11 @@ class Parser:
                 if len(rich_text) == 0:
                     continue
                 slug = page['properties']['slug']['rich_text'][0]['text']['content']
+                date_dict = page['properties']['date']['date']
+                if date_dict:
+                    date = date_dict['start']
+                    if date:
+                        slug = f'{date}-{slug}'
             except Exception as e:
                 log.error(f'Exception in getting slug. id:{id}, error:{e}')
                 continue
