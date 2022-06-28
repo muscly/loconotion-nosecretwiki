@@ -616,13 +616,8 @@ class Parser:
                             path_to_file = value
                         else:
                             path_to_file = Path.cwd() / value.strip("/")
-
-                        #original
-                        #cached_custom_file = self.cache_file(path_to_file)
-                        #injected_tag[attr] = str(cached_custom_file)  # source.name
-
-                        #no caching
-                        injected_tag[attr] = value
+                        cached_custom_file = self.cache_file(path_to_file)
+                        injected_tag[attr] = str(cached_custom_file)  # source.name
                 log.debug(f"Injecting <{section}> tag: {injected_tag}")
 
                 # adding `inner_html` as the tag's content
