@@ -110,5 +110,5 @@ if (regexOriginal.test(originalUrl))
 
 setTimeout(function(){
   window.location.href = url;
-}, 3000);
+}, 1000);
       """
