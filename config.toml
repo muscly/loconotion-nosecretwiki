@@ -105,7 +105,7 @@ var url = '/';
 if (regexOriginal.test(originalUrl))
 {
   const match = originalUrl.match(regexOriginal);
-  url = 'https://codingdad.me/' + match[1] + '-' + match[2] + '-' + match[3] + '-' + match[4];
+  url = '/' + match[1] + '-' + match[2] + '-' + match[3] + '-' + match[4];
 }
 
 setTimeout(function(){
