@@ -92,9 +92,10 @@ token = "secret_AxpQOzIY1AnIwK2f4NCGsZe5zz5yzx3RfoH3736PFl0"
   async = "async"
 
 [pages]
-  # 404
   [pages.59f6278a93e04df09e80b20b9d2a3bca]
     no-links = true
 
     [[pages.59f6278a93e04df09e80b20b9d2a3bca.inject.body.script]]
-      src="redirect.js"
+      inner_html="""
+window.location.href = '/404.html?original=' + encodeURIComponent(window.location.href);
+      """
