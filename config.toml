@@ -24,7 +24,10 @@ token = "secret_AxpQOzIY1AnIwK2f4NCGsZe5zz5yzx3RfoH3736PFl0"
   content = "CodingDad 2.0; No Secret Wiki"
   [[site.meta]]
   name = "description"
-  content = "남편이자 부모인 20 + N년 차 프로그래머. 유니티 렌더링 X 최적화. 아들과 게임 만들기. 요즘 머신러닝 0년차. "
+  content = "아들과 게임 만드는 걸 좋아하는 프로그래머입니다."
+  [[site.meta]]
+  name = "naver-site-verification"
+  content = "a15deab82d5b67cfa7cf52551b37e888f457199a"
 
   ## Custom Fonts ##
   # you can specify the name of a google font to use on the site - use the font embed name
