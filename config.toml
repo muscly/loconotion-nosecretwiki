@@ -97,7 +97,18 @@ token = "secret_AxpQOzIY1AnIwK2f4NCGsZe5zz5yzx3RfoH3736PFl0"
 
     [[pages.59f6278a93e04df09e80b20b9d2a3bca.inject.body.script]]
       inner_html="""
+var url = '/';
+switch(window.location.href)
+{
+  case 'https://codingdad.me/2019/09/18/toon-shading-universalrp/':
+    url = 'https://codingdad.me/2019-09-18-toon-shading-universalrp.html';
+    break;
+  case 'https://codingdad.me/2020/05/01/gamedevwithson-2d-character-animation-ik/':
+    url = 'https://codingdad.me/2020-05-01-gadevwithson-2d-character-animation-ik.html';
+    break;
+}
+
 setTimeout(function(){
-  window.location.href = '/';
-}, 5000);
+  window.location.href = url;
+}, 1000);
       """
