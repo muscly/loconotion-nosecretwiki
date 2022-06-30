@@ -63,7 +63,7 @@ token = "secret_AxpQOzIY1AnIwK2f4NCGsZe5zz5yzx3RfoH3736PFl0"
   rel="icon" 
   sizes="16x16"
   type="image/png"
-  href="/example/favicon-16x16.png"
+  href="/codingdad_favicon.png"
   
   # the following injects this tag in the in the <body>:
   #   <script src="custom-script.js" type="text/javascript"></script>
