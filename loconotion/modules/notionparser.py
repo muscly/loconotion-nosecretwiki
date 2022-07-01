@@ -46,7 +46,7 @@ class Parser:
             )
             raise Exception()
 
-        self.slug_dict = {}
+        self.page_info_dict = {}
         database_id = self.config.get("database_id", None)
         token = self.config.get("token", None)
         url = f'https://api.notion.com/v1/databases/{database_id}/query'
@@ -64,6 +64,7 @@ class Parser:
         for page in res_dict['results']:
             id = page['id'].replace("-", "")
             try:
+                # slug
                 rich_text = page['properties']['slug']['rich_text']
                 if len(rich_text) == 0:
                     continue
@@ -73,13 +74,16 @@ class Parser:
                     date = date_dict['start']
                     if date:
                         slug = f'{date}-{slug}'
+                # title
+                title = page['properties']['title']['title'][0]['plain_text']
+                description = page['properties']['description']['rich_text'][0]['text']['content']
             except Exception as e:
-                log.error(f'Exception in getting slug. id:{id}, error:{e}')
+                log.error(f'Exception in getting page info. id:{id}, error:{e}')
                 continue
 
-            self.slug_dict[id] = slug
+            self.page_info_dict[id] = {'slug': slug, 'title': title, 'description': description }
 
-        log.info ( f'slug_dict = {self.slug_dict}')
+        log.info ( f'page_info_dict = {self.page_info_dict}')
 
 
         # get the site name from the config, or make it up by cleaning the target page's slug
@@ -169,13 +173,13 @@ class Parser:
             log.debug(f"Custom slug found for url '{url}': '{custom_slug}'")
             return custom_slug.strip("/") + (".html" if extension else "")
         else:
-            for page_id in self.slug_dict:
+            for page_id in self.page_info_dict:
                 if page_id in url:
-                    slug = self.slug_dict[page_id]
+                    slug = self.page_info_dict[page_id]['slug']
                     log.debug(f"Found slug: {slug} from page_id: {page_id}. url: {url} ")
                     return slug.strip("/").strip() + (".html" if extension else "")
 
-            log.debug(f"slug Not found in slug_dict. url:{url}")
+            log.debug(f"slug Not found in page_info_dict. url:{url}")
 
             # if not, clean up the existing slug
             path = urllib.parse.urlparse(url).path.strip("/")
@@ -451,6 +455,28 @@ class Parser:
                 unwanted_og_tag.decompose()
 
     def set_custom_meta_tags(self, url, soup):
+        for page_id in self.page_info_dict:
+            if page_id in url:
+                title = self.page_info_dict[page_id]['title']
+                description = self.page_info_dict[page_id]['description']
+                log.debug(f"Found page_info: {title}, {description} from page_id: {page_id}. url: {url} ")
+
+                tag = soup.new_tag("meta")
+                tag.attrs['name'] = 'title'
+                tag.attrs['content'] = title
+                soup.head.append(tag)
+                log.debug(f"Adding meta tag {str(tag)}")
+
+                tag2 = soup.new_tag("meta")
+                tag2.attrs['name'] = 'description'
+                tag2.attrs['content'] = description
+                soup.head.append(tag2)
+                log.debug(f"Adding meta tag {str(tag2)}")
+
+                return
+
+        log.debug(f"Page info Not found in page_info_dict. url:{url}")
+
         # set custom meta tags
         custom_meta_tags = self.get_page_config(url).get("meta", [])
         for custom_meta_tag in custom_meta_tags:
