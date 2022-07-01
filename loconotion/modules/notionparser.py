@@ -482,6 +482,7 @@ class Parser:
                 final_url = url_root + '/' + html_file
                 log.debug(f"final_url: {final_url}")
 
+                og_site_name = self.config.get("og_site_name", None)
                 twitter_site = self.config.get("twitter_site", None)
                 twitter_creator = self.config.get("twitter_creator", None)
 
@@ -490,6 +491,7 @@ class Parser:
                 self.add_meta_tag( soup, 'title', None, title)
                 self.add_meta_tag( soup, 'description', None, description)
 
+                self.add_meta_tag( soup, None, 'og:site_name', 'Website')
                 self.add_meta_tag( soup, None, 'og:type', 'Website')
                 self.add_meta_tag( soup, None, 'og:title', title)
                 self.add_meta_tag( soup, None, 'og:description', description)

@@ -14,6 +14,7 @@ url_root = "https://codingdad.me"
 twitter_site = "@mycodingdad"
 twitter_creator = "@mycodingdad"
 cover_img_url = "https://codingdad.me/codingdad_logo.png"
+og_site_name ="CodingDad 2.0; No Secret Wiki"
 
 ## Global Site Settings ##
 # this [site] table defines override settings for the whole site
@@ -30,6 +31,9 @@ cover_img_url = "https://codingdad.me/codingdad_logo.png"
   name = "description"
   content = "아들과 게임 만드는 걸 좋아하는 프로그래머입니다."
   [[site.meta]]
+  property = "og:site_name"
+  content = "CodingDad 2.0; No Secret Wiki"
+  [[site.meta]]
   property = "og:type"
   content = "Website"
   [[site.meta]]
@@ -42,6 +46,9 @@ cover_img_url = "https://codingdad.me/codingdad_logo.png"
   property = "og:image"
   content = "https://codingdad.me/codingdad_logo.png"
   [[site.meta]]
+  property = "og:url"
+  content = "https://codingdad.me"
+  [[site.meta]]
   name = "twitter:card"
   content = "summary"
   [[site.meta]]
@@ -50,7 +57,18 @@ cover_img_url = "https://codingdad.me/codingdad_logo.png"
   [[site.meta]]
   name = "twitter:creator"
   content = "@mycodingdad"
-
+  [[site.meta]]
+  name = "twitter:title"
+  content = "CodingDad 2.0; No Secret Wiki"
+  [[site.meta]]
+  name = "twitter:description"
+  content = "아들과 게임 만드는 걸 좋아하는 프로그래머입니다."
+  [[site.meta]]
+  name = "twitter:image"
+  content = "https://codingdad.me/codingdad_logo.png"
+  [[site.meta]]
+  name = "twitter:url"
+  content = "https://codingdad.me"
 
   ## Custom Fonts ##
   # you can specify the name of a google font to use on the site - use the font embed name
