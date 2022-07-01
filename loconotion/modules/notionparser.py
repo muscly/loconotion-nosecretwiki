@@ -485,13 +485,15 @@ class Parser:
                 twitter_site = self.config.get("twitter_site", None)
                 twitter_creator = self.config.get("twitter_creator", None)
 
+                cover_img_url = self.config.get("cover_img_url", None)
+
                 self.add_meta_tag( soup, 'title', None, title)
                 self.add_meta_tag( soup, 'description', None, description)
 
                 self.add_meta_tag( soup, None, 'og:type', 'Website')
                 self.add_meta_tag( soup, None, 'og:title', title)
                 self.add_meta_tag( soup, None, 'og:description', description)
-                #self.add_meta_tag( soup, None, 'og:image', image)
+                self.add_meta_tag( soup, None, 'og:image', cover_img_url)
                 self.add_meta_tag( soup, None, 'og:url', url_root + '/' + html_file)
 
                 self.add_meta_tag( soup, 'twitter:card', None, 'summary')

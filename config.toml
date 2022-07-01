@@ -13,6 +13,7 @@ token = "secret_AxpQOzIY1AnIwK2f4NCGsZe5zz5yzx3RfoH3736PFl0"
 url_root = "https://codingdad.me"
 twitter_site = "@mycodingdad"
 twitter_creator = "@mycodingdad"
+cover_img_url = "https://codingdad.me/codingdad_logo.png"
 
 ## Global Site Settings ##
 # this [site] table defines override settings for the whole site
