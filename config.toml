@@ -10,6 +10,9 @@ name = "NoSecretWiki"
 page = "https://muscly.notion.site/CodingDad-2-0-No-Secret-Wiki-efb2b939911f4dc2a1a3d8f48f5f149a"
 database_id = "e3886bfe8d1e478c9f2888aae9870972"
 token = "secret_AxpQOzIY1AnIwK2f4NCGsZe5zz5yzx3RfoH3736PFl0"
+url_root = "https://codingdad.me"
+twitter_site = "@mycodingdad"
+twitter_creator = "@mycodingdad"
 
 ## Global Site Settings ##
 # this [site] table defines override settings for the whole site

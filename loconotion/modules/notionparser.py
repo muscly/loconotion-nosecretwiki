@@ -12,6 +12,7 @@ import uuid
 from pathlib import Path
 import json
 import requests
+from sqlalchemy import desc
 
 log = logging.getLogger(f"loconotion.{__name__}")
 
@@ -65,10 +66,10 @@ class Parser:
             id = page['id'].replace("-", "")
             try:
                 # slug
-                rich_text = page['properties']['slug']['rich_text']
-                if len(rich_text) == 0:
+                slug_array = page['properties']['slug']['rich_text']
+                if len(slug_array) == 0:
                     continue
-                slug = page['properties']['slug']['rich_text'][0]['text']['content']
+                slug = slug_array[0]['text']['content']
                 date_dict = page['properties']['date']['date']
                 if date_dict:
                     date = date_dict['start']
@@ -76,7 +77,12 @@ class Parser:
                         slug = f'{date}-{slug}'
                 # title
                 title = page['properties']['title']['title'][0]['plain_text']
-                description = page['properties']['description']['rich_text'][0]['text']['content']
+
+                # description
+                description = ''
+                description_array = page['properties']['description']['rich_text']
+                if len(description_array) > 0:
+                    description = description_array[0]['text']['content']
             except Exception as e:
                 log.error(f'Exception in getting page info. id:{id}, error:{e}')
                 continue
@@ -454,6 +460,16 @@ class Parser:
             if unwanted_og_tag:
                 unwanted_og_tag.decompose()
 
+    def add_meta_tag(self, soup, name, property, content):
+        tag = soup.new_tag("meta")
+        if name:
+            tag.attrs['name'] = name
+        if property:
+            tag.attrs['property'] = property
+        tag.attrs['content'] = content
+        soup.head.append(tag)
+        log.debug(f"Adding meta tag {str(tag)}")
+
     def set_custom_meta_tags(self, url, soup):
         for page_id in self.page_info_dict:
             if page_id in url:
@@ -461,17 +477,26 @@ class Parser:
                 description = self.page_info_dict[page_id]['description']
                 log.debug(f"Found page_info: {title}, {description} from page_id: {page_id}. url: {url} ")
 
-                tag = soup.new_tag("meta")
-                tag.attrs['name'] = 'title'
-                tag.attrs['content'] = title
-                soup.head.append(tag)
-                log.debug(f"Adding meta tag {str(tag)}")
+                url_root = self.config.get("url_root", None)
+                html_file = self.get_page_slug(url) if url != self.index_url else "index.html"
+                final_url = url_root + '/' + html_file
+                log.debug(f"final_url: {final_url}")
 
-                tag2 = soup.new_tag("meta")
-                tag2.attrs['name'] = 'description'
-                tag2.attrs['content'] = description
-                soup.head.append(tag2)
-                log.debug(f"Adding meta tag {str(tag2)}")
+                twitter_site = self.config.get("twitter_site", None)
+                twitter_creator = self.config.get("twitter_creator", None)
+
+                self.add_meta_tag( soup, 'title', None, title)
+                self.add_meta_tag( soup, 'description', None, description)
+
+                self.add_meta_tag( soup, None, 'og:type', 'Website')
+                self.add_meta_tag( soup, None, 'og:title', title)
+                self.add_meta_tag( soup, None, 'og:description', description)
+                #self.add_meta_tag( soup, None, 'og:image', image)
+                self.add_meta_tag( soup, None, 'og:url', url_root + '/' + html_file)
+
+                self.add_meta_tag( soup, 'twitter:card', None, 'summary')
+                self.add_meta_tag( soup, 'twitter:site', None, twitter_site)
+                self.add_meta_tag( soup, 'twitter:creator', None, twitter_creator)
 
                 return
 
