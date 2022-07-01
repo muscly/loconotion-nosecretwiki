@@ -501,6 +501,10 @@ class Parser:
                 self.add_meta_tag( soup, 'twitter:card', None, 'summary')
                 self.add_meta_tag( soup, 'twitter:site', None, twitter_site)
                 self.add_meta_tag( soup, 'twitter:creator', None, twitter_creator)
+                self.add_meta_tag( soup, 'twitter:title', None, title)
+                self.add_meta_tag( soup, 'twitter:description', None, description)
+                self.add_meta_tag( soup, 'twitter:image', None, cover_img_url)
+                self.add_meta_tag( soup, 'twitter:url', None, url_root + '/' + html_file )
 
                 return
 
